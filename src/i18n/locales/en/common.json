@@ -1,0 +1,37 @@
+{
+  "sign-in": {
+    "email": "Email",
+    "password": "Password",
+    "msg": "Don't have an account yet?"
+  },
+  "sign-up": {
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "msg": "Already have an account"
+  },
+  "btn": {
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid_type": "Invalid type",
+    "too_small": "This must be greater than or equal to {{err.minimum}}",
+    "too_big": "This must be less than or equal to {{err.maximum}}",
+    "email_format": "Invalid email format",
+    "invalid_literal": "Invalid literal",
+    "custom": "Custom validation failed",
+    "invalid_union": "Invalid union",
+    "invalid_union_discriminator": "Invalid union discriminator",
+    "invalid_enum_value": "Invalid enum value",
+    "unrecognized_keys": "Unrecognized keys",
+    "invalid_arguments": "Invalid arguments",
+    "invalid_return_type": "Invalid return type",
+    "invalid_date": "Invalid date",
+    "invalid_string": "Invalid string",
+    "invalid_intersection_types": "Invalid intersection types",
+    "not_multiple_of": "Value must be multiple of {{err.divisor}}",
+    "not_finite": "Value must be finite"
+  }
+}

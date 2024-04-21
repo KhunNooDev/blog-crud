@@ -1,0 +1,15 @@
+{
+  "title-web": "Blogs",
+  "list-blogs": "List Blogs",
+  "create": "Create Blog",
+  "list-detail": "Blogs Detail",
+  "edit-blog": "Edit Blog",
+  "form": {
+    "title": "Title",
+    "content": "Content"
+  },
+  "btn": {
+    "edit": "Edit",
+    "save": "Save"
+  }
+}

@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          Bytes?
+  hashedPassword String?
+  role           Role      @default(USER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  accounts     Accounts[]
+  // Define opposite relation fields for Blogs
+  createdBlogs Blogs[]    @relation("CreatedBy")
+  updatedBlogs Blogs[]    @relation("UpdatedBy")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+//for github google etc.
+model Accounts {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String? @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user Users? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Blogs {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String?
+  content     String?
+  createdById String   @map("createdById") @db.ObjectId
+  createdBy   Users    @relation("CreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedById String   @map("updatedById") @db.ObjectId
+  updatedBy   Users    @relation("UpdatedBy", fields: [updatedById], references: [id])
+  updatedAt   DateTime @updatedAt
+}

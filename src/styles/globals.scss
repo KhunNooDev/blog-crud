@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+  h2 {
+    @apply text-3xl font-bold;
+  }
+  h3 {
+    @apply text-2xl font-bold;
+  }
+  h4 {
+    @apply text-xl font-bold;
+  }
+  h5 {
+    @apply text-lg font-bold;
+  }
+  h6 {
+    @apply text-base font-bold;
+  }
+}
+
+*:not(.react-icons):not(.noflex) {
+  @at-root {
+    &:has(> .react-icons) {
+      @apply flex items-center;
+    }
+  }
+}
+:not(.noflex) > .react-icons {
+  @apply mr-2;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  // background: #f1f1f1;
+  background: var(--fallback-b1, oklch(var(--b1) / 1));
+
+  // border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  // background: #888;
+  background: var(--fallback-bc, oklch(var(--bc) / 1));
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
