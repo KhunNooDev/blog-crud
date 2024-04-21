@@ -5,7 +5,7 @@ import { getTranslationClient } from '@/i18n/client'
 import { Params } from '@/types/params'
 import Link from 'next/link'
 
-export default function signUpPage({ params: { locale } }: Params) {
+export default function SignUpPage({ params: { locale } }: Params) {
   const { t } = getTranslationClient(locale)
   const router = useRouter()
 

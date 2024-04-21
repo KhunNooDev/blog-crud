@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
-export default function signInPage({ params: { locale } }: Params) {
+export default function SignInPage({ params: { locale } }: Params) {
   const { t } = getTranslationClient(locale)
   const router = useRouter()
 
