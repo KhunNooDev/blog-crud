@@ -86,7 +86,7 @@ export default function Navbar(props: any) {
         </ul>
       </div>
       <div className='navbar-end gap-4 px-4'>
-        <label className='noflex swap swap-rotate'>
+        <label className='!swap swap-rotate'>
           <input type='checkbox' className='theme-controller hidden' value='light' />
           <RiSunLine className='swap-off fill-current' size={20} />
           <RiMoonLine className='swap-on fill-current' size={20} />

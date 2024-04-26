@@ -23,15 +23,15 @@
   }
 }
 
-*:not(.react-icons):not(.noflex) {
-  @at-root {
-    &:has(> .react-icons) {
-      @apply flex items-center;
+@layer utilities {
+  /* Apply flexbox styles to the parent of elements that don't have the class .react-icons but have direct children with the class .react-icons */
+  *:not(.react-icons) {
+    @at-root {
+      &:has(> .react-icons) {
+        @apply flex items-center;
+      }
     }
   }
-}
-:not(.noflex) > .react-icons {
-  @apply mr-2;
 }
 
 /* width */

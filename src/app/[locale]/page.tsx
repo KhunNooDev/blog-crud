@@ -13,7 +13,7 @@ export default function HomePage({ params: { locale } }: Params) {
 
   useEffect(() => {
     document.title = `${t('title-web')}`
-  }, [])
+  }, [t])
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/sign-in' })

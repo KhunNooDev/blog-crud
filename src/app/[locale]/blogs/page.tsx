@@ -66,18 +66,15 @@ export default function BlogsPage({ params: { locale } }: Params) {
               <div className='card-actions justify-between'>
                 <button
                   onClick={() => router.push(`/blogs/${blog.id}`)}
-                  className='noflex btn btn-square btn-ghost text-blue-500'
+                  className='btn btn-square btn-ghost text-blue-500'
                 >
                   <FiEye />
                 </button>
                 <div className='flex gap-2'>
-                  <button
-                    onClick={() => router.push(`/blogs/${blog.id}/edit`)}
-                    className='noflex btn btn-square btn-ghost'
-                  >
+                  <button onClick={() => router.push(`/blogs/${blog.id}/edit`)} className='btn btn-square btn-ghost'>
                     <FiEdit />
                   </button>
-                  <button onClick={() => deleteBlog(blog.id)} className='noflex btn btn-square btn-ghost text-red-500'>
+                  <button onClick={() => deleteBlog(blog.id)} className='btn btn-square btn-ghost text-red-500'>
                     <FiTrash2 />
                   </button>
                 </div>

@@ -83,7 +83,7 @@ export function getTranslationClient<Ns extends FlatNamespace, KPrefix extends K
       if (cookies[cookieName] === lng) return
       // eslint-disable-next-line react-hooks/rules-of-hooks
       setCookie(cookieName, lng, { path: '/' })
-    }, [lng, cookies[cookieName]])
+    }, [lng, cookies, setCookie])
   }
   return ret
 }
