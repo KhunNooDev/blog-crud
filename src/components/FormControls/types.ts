@@ -61,5 +61,6 @@ export type Option = {
 }
 
 export type DividerProps = {
-  text: string
+  text?: string
+  isHorizontal?: boolean
 }
