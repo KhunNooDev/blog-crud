@@ -6,6 +6,7 @@ import { FiEdit, FiEye, FiTrash2 } from 'react-icons/fi'
 import { Params } from '@/types/params'
 import { getTranslationClient } from '@/i18n/client'
 import { BlogsType } from '@/app/api/blogs/route'
+import { cn } from '@/utils/cn'
 
 export default function BlogsPage({ params: { locale } }: Params) {
   const { t } = getTranslationClient(locale, 'blogs')
@@ -39,9 +40,32 @@ export default function BlogsPage({ params: { locale } }: Params) {
       })
   }
 
+  const [categoryId, setCategoryId] = useState(0)
+  const categories = [
+    'All',
+    'Beanding',
+    'Development',
+    'Fireart Life',
+    'Illustration',
+    'Innovation Hub',
+    'Motion Design',
+    'UI/UX Design',
+  ]
   return (
     <div className='mx-24'>
       <h1 className='my-6 text-3xl font-bold '>{t('list-blogs')}</h1>
+      <div className='my-2 bg-base-200 p-4'>
+        <div className='flex justify-center gap-2'>
+          {categories.map((category, idx) => (
+            <div
+              className={cn('link-hover link', { underline: categoryId === idx })}
+              onClick={() => setCategoryId(idx)}
+            >
+              {category}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className='mb-4 flex items-center justify-between'>
         <button className='btn btn-primary' onClick={() => router.push('/blogs/create')}>
           {t('create')}

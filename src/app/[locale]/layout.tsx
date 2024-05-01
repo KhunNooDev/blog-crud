@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 
 import '@/styles/globals.scss'
 import Providers from '@/app/providers'
-import { Params, ParamsLng } from '@/types/params'
+import { Params } from '@/types/params'
 import { getTranslationServer } from '@/i18n/server'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   // icons: {
   //   icon: [
   //     {
-  //       url: '/icon.ico', // /public path
-  //       href: '/icon.ico', // /public path
+  //       url: '/public/favicon.ico', //public path
+  //       href: '/icon.ico', //public path
   //     },
   //   ],
   // },
@@ -33,7 +33,7 @@ export default async function RootLayout({ children, params: { locale } }: IRoot
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <Providers locale={locale}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

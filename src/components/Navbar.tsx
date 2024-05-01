@@ -1,9 +1,12 @@
-import Link from 'next/link'
+'use client'
 import React, { Fragment } from 'react'
+import Link from 'next/link'
 import { RiMenu2Line, RiMoonLine, RiSunLine } from 'react-icons/ri'
+import { LocaleTypes } from '@/i18n/settings'
 import ChangeLocale from './ChangeLocale'
+import Avatar from './Avatar'
 
-const titleHeader = 'daisyUI'
+const titleHeader = 'BlogCRUD'
 const menus = [
   {
     label: 'Blogs',
@@ -28,9 +31,11 @@ const menus = [
     href: '/',
   },
 ]
-export default function Navbar(props: any) {
+
+interface INavbar {}
+export default function Navbar(props: INavbar) {
   return (
-    <div className='navbar bg-base-100'>
+    <div className='navbar bg-base-300'>
       <div className='navbar-start'>
         <div className='dropdown'>
           <div tabIndex={0} role='button' className='btn btn-ghost lg:hidden'>
@@ -91,7 +96,8 @@ export default function Navbar(props: any) {
           <RiSunLine className='swap-off fill-current' size={20} />
           <RiMoonLine className='swap-on fill-current' size={20} />
         </label>
-        <ChangeLocale locale={props.locale} />
+        <ChangeLocale />
+        <Avatar />
       </div>
     </div>
   )

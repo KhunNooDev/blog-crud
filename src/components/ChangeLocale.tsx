@@ -1,12 +1,10 @@
 'use client'
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
+import { useParams, useRouter, useSelectedLayoutSegments } from 'next/navigation'
 import { LocaleTypes } from '@/i18n/settings'
 
-interface IChangeLocale {
-  locale: LocaleTypes
-}
+interface IChangeLocale {}
 export default function ChangeLocale(props: IChangeLocale) {
-  const { locale } = props
+  const locale = useParams()?.locale as LocaleTypes
   const router = useRouter()
   const urlSegments = useSelectedLayoutSegments()
 
