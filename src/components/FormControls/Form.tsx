@@ -1,6 +1,6 @@
 'use client'
 import { useParams } from 'next/navigation'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useForm, FormProvider, useFormContext } from 'react-hook-form'
 import axios from 'axios'
 import { z } from 'zod'
@@ -371,6 +371,7 @@ export function InputTextArea(props: TypeInputTextArea) {
   }
   return <div className={`grid grid-cols-12 ${containerClass}`}>{element}</div>
 }
+
 export function InputCheckbox(props: TypeInputCheckbox) {
   const { defaultLayout, readOnly } = useContext(FormContext)
   const {
@@ -513,13 +514,59 @@ export function InputSelect(props: TypeInputSelect) {
   return <div className={`mb-4 grid grid-cols-12 ${containerClass}`}>{element}</div>
 }
 
-export function DividerWithText({ text }: DividerProps) {
+interface InputMultiSelectProps {
+  options: string[]
+  placeholder: string
+}
+export function InputMultiSelect({ options, placeholder }: InputMultiSelectProps) {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const handleToggleDropdown = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const handleSelectOption = (option: string) => {
+    setSelectedOptions([...selectedOptions, option])
+    setSearchValue('')
+  }
+
+  const handleRemoveOption = (option: string) => {
+    setSelectedOptions(selectedOptions.filter(item => item !== option))
+  }
+
   return (
-    <div className='inline-flex w-full items-center justify-center'>
-      <hr className='my-8 h-px w-64 border-0 bg-gray-200 dark:bg-gray-800' />
-      <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-gray-900 dark:bg-gray-900 dark:text-white'>
-        {text}
-      </span>
+    <div>
+      <div onClick={handleToggleDropdown} className='badge badge-outline'>
+        {selectedOptions.map(option => (
+          <div key={option} className='badge badge-primary' onClick={() => handleRemoveOption(option)}>
+            {option}
+          </div>
+        ))}
+      </div>
+      {isOpen && (
+        <div className='dropdown dropdown-end'>
+          <input
+            className='input input-bordered'
+            placeholder={placeholder}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+          />
+          <ul>
+            {options
+              .filter(option => option.toLowerCase().includes(searchValue.toLowerCase()))
+              .map(option => (
+                <li key={option} onClick={() => handleSelectOption(option)}>
+                  {option}
+                </li>
+              ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
+}
+export function Divider({ text, isHorizontal }: DividerProps) {
+  return <div className={cn('divider', { 'divider-horizontal': isHorizontal })}>{text}</div>
 }

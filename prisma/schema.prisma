@@ -23,8 +23,11 @@ model Users {
 
   accounts     Accounts[]
   // Define opposite relation fields for Blogs
-  createdBlogs Blogs[]    @relation("CreatedBy")
-  updatedBlogs Blogs[]    @relation("UpdatedBy")
+  createdBlogs Blogs[]          @relation("CreatedBy")
+  updatedBlogs Blogs[]          @relation("UpdatedBy")
+  // Define opposite relation fields for BlogCategories
+  createdTags  BlogCategories[] @relation("CreatedBy")
+  updatedTags  BlogCategories[] @relation("UpdatedBy")
 }
 
 enum Role {
@@ -53,13 +56,37 @@ model Accounts {
 }
 
 model Blogs {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String?
-  content     String?
-  createdById String   @map("createdById") @db.ObjectId
-  createdBy   Users    @relation("CreatedBy", fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedById String   @map("updatedById") @db.ObjectId
-  updatedBy   Users    @relation("UpdatedBy", fields: [updatedById], references: [id])
-  updatedAt   DateTime @updatedAt
+  id             String               @id @default(auto()) @map("_id") @db.ObjectId
+  title          String?
+  content        String?
+  blogCategories BlogCategoryToBlog[]
+  createdById    String               @map("createdById") @db.ObjectId
+  createdBy      Users                @relation("CreatedBy", fields: [createdById], references: [id])
+  createdAt      DateTime             @default(now())
+  updatedById    String               @map("updatedById") @db.ObjectId
+  updatedBy      Users                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  updatedAt      DateTime             @updatedAt
+}
+
+model BlogCategories {
+  id          String               @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  isActive    Boolean              @default(true)
+  blogs       BlogCategoryToBlog[]
+  createdById String               @map("createdById") @db.ObjectId
+  createdBy   Users                @relation("CreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime             @default(now())
+  updatedById String               @map("updatedById") @db.ObjectId
+  updatedBy   Users                @relation("UpdatedBy", fields: [updatedById], references: [id])
+  updatedAt   DateTime             @updatedAt
+}
+
+//THIS IS THE LOOKUP TABLE
+// Junction table for representing the many-to-many relationship between Blogs and BlogCategories
+model BlogCategoryToBlog {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  blog           Blogs          @relation(fields: [blogId], references: [id])
+  blogId         String         @db.ObjectId
+  blogCategory   BlogCategories @relation(fields: [blogCategoryId], references: [id])
+  blogCategoryId String         @db.ObjectId
 }
