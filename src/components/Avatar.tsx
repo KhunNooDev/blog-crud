@@ -16,12 +16,18 @@ export default function Avatar() {
   }
   return (
     <div className='dropdown dropdown-end'>
-      <div tabIndex={0} className={cn('avatar', { online: isOnline, offline: !isOnline })}>
-        <div className='w-10 rounded-full'>
-          <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+      <div tabIndex={0} className={cn('avatar placeholder', { online: isOnline, offline: !isOnline })}>
+        <div className='w-10 rounded-full bg-neutral text-neutral-content'>
+          <span className='text-xl'>{getAvatarPlaceholder(session?.user.name as string)}</span>
         </div>
       </div>
       <ul tabIndex={0} className='menu dropdown-content z-[1] mt-4 w-52 rounded-box bg-base-100 p-2 shadow'>
+        <li>
+          <div className='flex flex-col items-start'>
+            <div>{session?.user.name}</div>
+            <div>{session?.user.email}</div>
+          </div>
+        </li>
         <li>
           <Link href={'#'}>Settings</Link>
         </li>
@@ -33,4 +39,9 @@ export default function Avatar() {
       </ul>
     </div>
   )
+}
+
+export function getAvatarPlaceholder(name?: string): string {
+  const firstChar = name?.charAt(0) || ''
+  return firstChar.toUpperCase()
 }
