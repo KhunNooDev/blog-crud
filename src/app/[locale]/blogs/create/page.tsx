@@ -1,13 +1,26 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Params } from '@/types/params'
 import { getTranslationClient } from '@/i18n/client'
 import Form, { Divider, InputGroup, InputMultiSelect, InputText, InputTextArea } from '@/components/FormControls/Form'
+import axios from 'axios'
 
 export default function BlogCreatePage({ params: { locale } }: Params) {
   const { t } = getTranslationClient(locale, 'blogs')
   const router = useRouter()
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    axios
+      .get('/api/blogCategories')
+      .then(res => {
+        setCategories(res.data.blogCategories)
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error)
+      })
+  }, [])
 
   const onSubmit = (data: any) => {
     if (data.success) {
@@ -19,17 +32,14 @@ export default function BlogCreatePage({ params: { locale } }: Params) {
     }
   }
 
-  const options = ['Option 1', 'Option 2', 'Option 3']
-
   return (
-    <main className='container mx-auto'>
+    <main className='container mx-auto min-h-screen'>
       <h1 className='my-6 text-3xl font-bold'>{t('create')}</h1>
       <Form onSubmit={onSubmit} action='/blogs' method='POST' vertical>
-        <InputText id='title' label={t('form.title')} labelCol={3} required />
-        <InputTextArea id='content' label={t('form.content')} labelCol={3} rows={5} required />
-        <Divider text={'Other'} />
-        <InputMultiSelect options={options} placeholder='Search...' />
-
+        <InputText id='title' label={t('form.title')} required />
+        <InputTextArea id='content' label={t('form.content')} rows={10} required />
+        {/* <Divider text={'Other'} /> */}
+        <InputMultiSelect id='categoryIds' label={'Categories'} options={categories} required />
         <InputGroup>
           <button type='submit' className='btn btn-primary col-span-12 md:col-span-2'>
             {t('btn.save')}

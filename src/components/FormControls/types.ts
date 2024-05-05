@@ -44,6 +44,7 @@ export type TypeInputCheckbox<T = HTMLInputElement> = {
 
 export type TypeInputSelect<T = HTMLSelectElement> = {
   options: Option[]
+  showClear?: boolean
 } & TypeInputDefault<T>
 
 export type LayoutClasses = {

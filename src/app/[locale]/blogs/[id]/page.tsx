@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Params } from '@/types/params'
 import { Blogs } from '@prisma/client'
 import { getTranslationClient } from '@/i18n/client'
-import Form, { InputText, InputTextArea } from '@/components/FormControls/Form'
+import Form, { InputMultiSelect, InputText, InputTextArea } from '@/components/FormControls/Form'
 
 export default function BlogDetailsPage({ params }: Params) {
   const { locale, id } = params
@@ -14,30 +14,45 @@ export default function BlogDetailsPage({ params }: Params) {
   const [blog, setBlog] = useState<Blogs | null>(null)
 
   useEffect(() => {
-    if (id) {
-      getBlog(id)
-    }
-  }, [id])
+    document.title = `${t('title-web')}${blog && ` - ${blog.title}`}`
+  }, [blog])
 
-  const getBlog = (id: string) =>
+  useEffect(() => {
+    getBlog()
+  }, [])
+
+  const getBlog = () =>
     axios
       .get(`/api/blogs/${id}`)
       .then(res => {
         const data = res.data
         setBlog(data.blog)
-        document.title = `${t('title-web')} - ${data.blog.title}`
       })
-      .catch(err => {
-        //
+      .catch(error => {
+        console.error('Error fetching data:', error)
       })
+
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    axios
+      .get('/api/blogCategories')
+      .then(res => {
+        setCategories(res.data.blogCategories)
+      })
+      .catch(error => {
+        console.error('Error fetching categories:', error)
+      })
+  }, [])
 
   return (
     blog && (
-      <div className='mx-24'>
+      <div className='mx-24 min-h-screen'>
         <h1 className='my-6 text-3xl font-bold'>{t('list-detail')}</h1>
         <Form defaultValues={blog} vertical readOnly>
           <InputText id='title' label={t('form.title')} labelCol={3} required />
-          <InputTextArea id='content' label={t('form.content')} labelCol={3} rows={5} required />
+          <InputTextArea id='content' label={t('form.content')} labelCol={3} rows={10} required />
+          <InputMultiSelect id='categoryIds' label={'Categories'} options={categories} required />
           <div className='mt-2 flex justify-between gap-2'>
             <button className='btn btn-primary w-28' onClick={() => router.push(`/blogs/${blog.id}/edit`)}>
               {t('btn.edit')}

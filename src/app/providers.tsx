@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import { IconContext } from 'react-icons'
 import { usePathname } from 'next/navigation'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 interface IProviders {
   children: React.ReactNode
@@ -24,6 +25,7 @@ export default function Providers({ children }: IProviders) {
           <>
             <Navbar />
             {children}
+            <Footer />
           </>
         )}
       </IconContext.Provider>
