@@ -10,34 +10,39 @@ import { cn } from '@/utils/cn'
 import { RiArrowRightLine } from 'react-icons/ri'
 import { Option } from '@/components/FormControls/types'
 import moment from 'moment'
+import useStateApi from '@/hooks/useStateApi'
+import { BlogCategoriesType } from '@/app/api/blogCategories/route'
 
 export default function BlogsPage({ params: { locale } }: Params) {
   const { t } = getTranslationClient(locale, 'blogs')
   const router = useRouter()
 
   const [blogs, setBlogs] = useState<BlogsType>([])
-  const [categories, setCategories] = useState<Option[]>([])
-
+  // const [categories, setCategories] = useState<Option[]>([])
+  const [categories, loading, error] = useStateApi<Option[]>('/api/blogCategories', 'blogCategories')
+  // if (categories) {
+  //   debugger
+  // }
   const [categoryId, setCategoryId] = useState<string | number | null>(null)
 
   useEffect(() => {
     document.title = t('title-web')
-    getBlogCategories()
+    // getBlogCategories()
   }, [])
 
   useEffect(() => {
     getBlogs()
   }, [categoryId])
 
-  const getBlogCategories = () =>
-    axios
-      .get('/api/blogCategories')
-      .then(res => {
-        setCategories(res.data.blogCategories)
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error)
-      })
+  // const getBlogCategories = () =>
+  //   axios
+  //     .get('/api/blogCategories')
+  //     .then(res => {
+  //       setCategories(res.data.blogCategories)
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error)
+  //     })
 
   const getBlogs = () =>
     axios
@@ -88,7 +93,7 @@ export default function BlogsPage({ params: { locale } }: Params) {
           >
             All
           </div>
-          {categories.map((category, idx) => (
+          {categories?.map((category, idx) => (
             <div
               key={idx}
               className={cn('link-hover link', { underline: categoryId === category.value })}

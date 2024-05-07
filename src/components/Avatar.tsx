@@ -29,7 +29,7 @@ export default function Avatar() {
           </div>
         </li>
         <li>
-          <Link href={'#'}>Settings</Link>
+          <Link href={'/settings/profile'}>Settings</Link>
         </li>
         <li>
           <div onClick={() => handleSignOut()} className={cn({ 'text-error': session, 'text-accent': !session })}>

@@ -596,13 +596,24 @@ export function InputMultiSelect(props: TypeInputSelect) {
   })
 
   //{...register(id, { required, disabled })} for custom input
-  useEffect(() => {
+  // useEffect(() => {
+  //   const defaultValue = watch(id)
+  //   if (defaultValue) {
+  //     const selectedValues = options.filter(option => defaultValue.includes(option.value))
+  //     setSelectedOptions(selectedValues)
+  //   }
+  // }, [])
+  const [hasInitialized, setHasInitialized] = useState(false)
+
+  // Run the logic only once when the component mounts
+  if (!hasInitialized) {
     const defaultValue = watch(id)
     if (defaultValue) {
       const selectedValues = options.filter(option => defaultValue.includes(option.value))
       setSelectedOptions(selectedValues)
     }
-  }, [])
+    setHasInitialized(true) // Mark the initialization as done
+  }
 
   const updateData = (options: Option[]) => {
     // Update form data when selectedOptions change

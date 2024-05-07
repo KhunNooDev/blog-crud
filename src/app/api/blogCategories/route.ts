@@ -3,7 +3,8 @@ import prisma from '@/libs/prismadb'
 import { authOptions } from '@/app/api/auth/options'
 import { getServerSession } from 'next-auth'
 
-export type BlogsType = ReturnType<typeof GET> extends Promise<NextResponse<{ blogs: infer T }>> ? T : never
+export type BlogCategoriesType =
+  ReturnType<typeof GET> extends Promise<NextResponse<{ blogCategories: infer T }>> ? T : never
 export type BlogType = ReturnType<typeof POST> extends Promise<NextResponse<{ blog: infer T }>> ? T : never
 
 export async function GET(req: NextRequest) {
